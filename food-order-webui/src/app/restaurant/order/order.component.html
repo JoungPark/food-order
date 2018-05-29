@@ -1,0 +1,19 @@
+<p>
+  order works! {{serveOption}}
+</p>
+<div id="servOption" class="row">
+  <button class="col-4 btn" [ngClass]="{ 'btn-primary': (serveOption==1), 'btn-remove': !(serveOption==2) }" (click)="onClickServeOption(1)">Pickup</button>
+  <button class="col-4 btn" [ngClass]="{ 'btn-primary': (serveOption==2), 'btn-remove': !(serveOption==2) }" (click)="onClickServeOption(2)">Delivery</button>
+  <button class="col-4 btn" [ngClass]="{ 'btn-primary': (serveOption==3), 'btn-remove': !(serveOption==3) }" (click)="onClickServeOption(3)">Hall</button>
+</div>
+<br/>
+<div id="date" class="row">
+  <select class="form-control" (change)="onDateChange($event.target.value)">
+    <option *ngFor="let date of dateArray">{{date}}</option>
+  </select>
+</div>
+<div id="time" class="row">
+    <select class="form-control" (change)="onTimeChange($event.target.value)">
+      <option *ngFor="let time of timeArray">{{time}}</option>
+    </select>
+</div>
