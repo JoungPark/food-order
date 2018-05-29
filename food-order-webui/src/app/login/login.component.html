@@ -1,0 +1,34 @@
+<div class="login-page">
+    <div class="row justify-content-md-center">
+        <div class="col-md-4">
+            <img src="assets/images/logo.png" width="150px" class="user-avatar" />
+            <h1>Login</h1>
+            <form role="form">
+                <div *ngIf="loginFail" class="login-fail-message">
+                    <h5 class="card-title">Login fail</h5>
+                    <p class="card-text">Invalid username or password</p>
+                </div>
+                <div class="form-content">
+                    <div class="form-group">
+                        <input type="text" [value]="username" (input)="username = $event.target.value" class="form-control input-underline input-lg" id="email" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" [value]="password" (input)="password = $event.target.value" class="form-control input-underline input-lg" id="password" placeholder="Password">
+                    </div>
+                </div>
+                <a class="btn rounded-btn" (click)="onLoggedin()"> Log in </a>
+                &nbsp;
+                <a class="btn rounded-btn" [routerLink]="['/signup']">Register</a>
+                &nbsp;
+                <div class="form-content">
+                    <div class="form-group">
+                        <button class="btn rounded-btn" (click)="facebookLogin()">Login with Facebook</button> 
+                    </div>
+                    <div class="form-group">
+                        <button class="btn rounded-btn" (click)="googleLogin()">Login with Google</button> 
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
