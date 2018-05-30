@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RestaurantComponent } from './restaurant.component';
 import { Routes, RouterModule } from '@angular/router';
 import { OrderComponent } from './order/order.component';
-import { MenuComponent } from './menu/menu.component';
+import { MenulistComponent } from './menulist/menulist.component';
 import { DatetimeFunction } from '../shared/datetime-function';
 
 const routes:Routes = [
@@ -18,6 +18,6 @@ const routes:Routes = [
   providers: [
     DatetimeFunction
   ],
-  declarations: [RestaurantComponent, OrderComponent, MenuComponent]
+  declarations: [RestaurantComponent, OrderComponent, MenulistComponent]
 })
 export class RestaurantModule { }

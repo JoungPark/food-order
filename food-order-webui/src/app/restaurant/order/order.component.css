@@ -1,3 +1,17 @@
 .btn-space {
     margin-left: 10px;
 }
+.margin01px {
+    margin: 0.1px;
+}
+.border1blue {
+    border: 1px solid blue;
+}
+.textleft {
+    /* width: 100%; */
+    text-align: left;
+}
+.textright {
+    /* width: 100%; */
+    text-align: right;
+}

@@ -15,14 +15,37 @@ export class OrderComponent implements OnInit {
   timeArray: String[];
   selDate: String;
   selTime: String;
+  selOrderList: any[];
+
+  subtotalPrice: number = 0;
+  deliveryFee: number = 0;
+  totalPrice: number = 0;
 
   ngOnInit() {
     this.dateArray = this.getAvailableDate();
     this.timeArray = this.getAvailableTime();
+    this.selOrderList = this.getOrderList();
+
+    this.updatePrice();
+  }
+
+  updatePrice() {
+    this.subtotalPrice = 0;
+    this.selOrderList.forEach(element => {
+      this.subtotalPrice += element.price;
+    });
+    this.totalPrice = this.subtotalPrice
+    this.totalPrice = this.subtotalPrice + this.deliveryFee;
   }
 
   onClickServeOption(option: ServeOption) {
     this.serveOption = option;
+    if (option == ServeOption.Delivery) {
+      this.deliveryFee = 5;
+    } else {
+      this.deliveryFee = 0;
+    }
+    this.updatePrice();
   }
 
   onDateChange(targetValue) {
@@ -32,6 +55,27 @@ export class OrderComponent implements OnInit {
 
   onTimeChange(targetValue) {
     this.selTime = targetValue;
+  }
+
+  onCheckout() {
+    
+  }
+
+  onMenuCountChange(order, value) {
+    order.count = value;
+    order.price = order.unitprice * value;
+    this.updatePrice();
+  }
+  onClickRemoveOrder(order) {
+    const index: number = this.selOrderList.indexOf(order);
+    if (index !== -1) {
+        this.selOrderList.splice(index, 1);
+    }
+    this.updatePrice();
+  }
+
+  onItemClick(menu) {
+    alert("alert" + menu.name);
   }
 
   getAvailableDate(): any {
@@ -45,22 +89,21 @@ export class OrderComponent implements OnInit {
   }
 
   getAvailableTime(): any {
-    var retArray = new Array(7)
+    return [
+      '10:00 am', '10:10 am', '10:20 am', '10:30 am', '10:40 am', '10:50 am', '11:00 am'
+    ];
+  }
 
-    retArray[0] = '10:00 am';
-    retArray[1] = '10:10 am';
-    retArray[2] = '10:20 am';
-    retArray[3] = '10:30 am';
-    retArray[4] = '10:40 am';
-    retArray[5] = '10:50 am';
-    retArray[6] = '11:00 am';
-    
-    return retArray;
+  getOrderList(): any {
+    return [
+      {name: 'pizza', unitprice: 20.00, count:2, price: 40.00},
+      {name: 'coke', unitprice: 50.00, count:1, price: 5.00}
+    ];
   }
 }
 
 enum ServeOption {
   Pickup = 1,
   Delivery,
-  Hall,
+  Seat,
 }

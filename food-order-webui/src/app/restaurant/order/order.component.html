@@ -1,19 +1,76 @@
-<p>
-  order works! {{serveOption}}
-</p>
-<div id="servOption" class="row">
-  <button class="col-4 btn" [ngClass]="{ 'btn-primary': (serveOption==1), 'btn-remove': !(serveOption==2) }" (click)="onClickServeOption(1)">Pickup</button>
-  <button class="col-4 btn" [ngClass]="{ 'btn-primary': (serveOption==2), 'btn-remove': !(serveOption==2) }" (click)="onClickServeOption(2)">Delivery</button>
-  <button class="col-4 btn" [ngClass]="{ 'btn-primary': (serveOption==3), 'btn-remove': !(serveOption==3) }" (click)="onClickServeOption(3)">Hall</button>
+<div class="container-fluid margin01px">
+  <div id="servOption" class="row">
+    <button class="col-4 btn" [ngClass]="{ 'btn-primary': (serveOption==1), 'btn-remove': !(serveOption==2) }" (click)="onClickServeOption(1)">Pickup</button>
+    <button class="col-4 btn" [ngClass]="{ 'btn-primary': (serveOption==2), 'btn-remove': !(serveOption==2) }" (click)="onClickServeOption(2)">Delivery</button>
+    <button class="col-4 btn" [ngClass]="{ 'btn-primary': (serveOption==3), 'btn-remove': !(serveOption==3) }" (click)="onClickServeOption(3)">Seat</button>
+  </div>
+  <br/>
+  <div id="date" class="row">
+    <select class="form-control" (change)="onDateChange($event.target.value)">
+      <option *ngFor="let date of dateArray">{{date}}</option>
+    </select>
+  </div>
+  <div id="time" class="row">
+      <select class="form-control" (change)="onTimeChange($event.target.value)">
+        <option *ngFor="let time of timeArray">{{time}}</option>
+      </select>
+  </div>
 </div>
 <br/>
-<div id="date" class="row">
-  <select class="form-control" (change)="onDateChange($event.target.value)">
-    <option *ngFor="let date of dateArray">{{date}}</option>
-  </select>
+<div id="orderlist" class="row">
+  <div class="container" *ngFor="let order of selOrderList">
+    <div class="row">
+      <div class="col-8 "><h6 class="my-0">{{order.name}}</h6></div>
+      <div class="col-4 textright"><h6 class="my-0">{{ order.price | currency:'AUD'}}</h6></div>
+    </div>
+    <div class="d-flex flex-row-reverse">
+      <div class="p-2">
+        <select class="form-control form-control-sm" (change)="onMenuCountChange(order, $event.target.value)">
+          <option *ngFor="let num of [1,2,3,4,5,6,7,8,9,10]" [selected]="num == order.count">{{num}}</option>
+        </select>
+      </div>
+      <div class="p-2">
+        <button class="btn btn-sm" (click)="onClickRemoveOrder(order)">remove</button>
+      </div>
+      <div class="p-2 flex-grow-1">
+          <small class="text-muted">Brief description</small>
+      </div>
+    </div>
+    <hr/>
+  </div>
 </div>
-<div id="time" class="row">
-    <select class="form-control" (change)="onTimeChange($event.target.value)">
-      <option *ngFor="let time of timeArray">{{time}}</option>
-    </select>
+<br/>
+<div id="total" class="">
+  <div class="row">
+    <div class="col-7"><h6 class="my-0">Subtotal</h6></div>
+    <div class="col-5 textright"><h6>{{ subtotalPrice | currency:'AUD'}}</h6></div>
+  </div>
+  <div class="row">
+    <div class="col-7"><h6>Delivery</h6></div>
+    <div class="col-5 textright"><h6>+ {{ deliveryFee | currency:'AUD'}}</h6></div>
+  </div>
+  <div class="row">
+    <div class="col-7">
+        <h6 class="my-0">Total</h6>
+    </div>
+    <div class="col-5 textright">
+      <h6>{{ totalPrice | currency:'AUD'}}</h6>
+    </div>
+  </div>
 </div>
+<hr>
+<button class="col-12 btn btn-success" (click)="onCheckout()">Check out</button>
+
+
+<ul class="list-group mb-3">
+    <li class="list-group-item d-flex justify-content-between lh-condensed" (click)="onItemClick(order)" *ngFor="let order of selOrderList">
+      <div>
+        <h6 class="my-0">{{order.name}}</h6>
+        <small class="text-muted">Brief description</small>
+      </div>
+      <div class="textright">
+          <h6 class="my-0">{{order.price | currency:'AUD' }}</h6>
+          <small class="text-muted">{{order.count}}EA</small>
+      </div>
+    </li>
+  </ul>
